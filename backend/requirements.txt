@@ -1,0 +1,27 @@
+# Backend Dependencies for PagaJusto
+# Install with: pip install -r requirements.txt
+
+# NestJS Framework
+@nestjs/common ^11.0.0
+@nestjs/core ^11.0.0
+@nestjs/platform-express ^11.0.0
+@nestjs/jwt ^11.0.0
+@nestjs/passport ^11.0.0
+@nestjs/config ^12.0.0
+
+# Database & ORM
+prisma ^6.19.3
+@prisma/client ^6.19.3
+
+# Stellar SDK
+@stellar/stellar-sdk ^17.1.0
+
+# Validation & Utilities
+class-validator ^0.14.0
+class-transformer ^0.5.0
+lodash ^4.17.21
+uuid ^14.0.2
+zod ^3.23.8
+
+# TypeScript & Build
+typescript ^5.5.0

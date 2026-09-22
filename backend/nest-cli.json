@@ -1,0 +1,6 @@
+{
+  "collection": "@nestjs/cli",
+  "sourceRoot": "src",
+  "migrationsRoot": "prisma/migrations",
+  "database": "postgresql://pagajusto:pagajusto_dev@localhost:5432/pagajusto?schema=public"
+}
