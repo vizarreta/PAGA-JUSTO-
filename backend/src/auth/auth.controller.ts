@@ -1,9 +1,10 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, Get, UseGuards, Request } from '@nestjs/common';
 import { AuthService } from './auth.service';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private authService: AuthService) {}
 
   @Post('challenge')
   async getChallenge(@Body('publicKey') publicKey: string) {
@@ -17,5 +18,11 @@ export class AuthController {
     @Body('nonce') nonce: string,
   ) {
     return this.authService.verifySignature(publicKey, signature, nonce);
+  }
+
+  @Get('me')
+  @UseGuards(JwtAuthGuard)
+  async getProfile(@Request() req: any) {
+    return req.user;
   }
 }

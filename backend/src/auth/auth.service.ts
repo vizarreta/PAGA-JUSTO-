@@ -1,4 +1,5 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from '../prisma/prisma.service';
 import { v4 as uuidv4 } from 'uuid';
 import { Keypair } from '@stellar/stellar-sdk';
@@ -8,7 +9,10 @@ export class AuthService {
   private readonly logger = new Logger(AuthService.name);
   private challenges = new Map<string, { nonce: string; expiresAt: number }>();
 
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly jwtService: JwtService,
+  ) {}
 
   async getChallenge(publicKey: string) {
     const nonce = uuidv4();
@@ -24,18 +28,17 @@ export class AuthService {
     const challenge = this.challenges.get(publicKey);
 
     if (!challenge) {
-      throw new Error('No challenge found for this public key');
+      throw new UnauthorizedException('No challenge found for this public key');
     }
 
     if (challenge.nonce !== nonce) {
-      throw new Error('Invalid nonce');
+      throw new UnauthorizedException('Invalid nonce');
     }
 
     if (Date.now() > challenge.expiresAt) {
-      throw new Error('Challenge expired');
+      throw new UnauthorizedException('Challenge expired');
     }
 
-    // Verify signature using Stellar SDK
     try {
       const keypair = Keypair.fromPublicKey(publicKey);
       const isValid = keypair.verify(
@@ -44,17 +47,43 @@ export class AuthService {
       );
 
       if (!isValid) {
-        throw new Error('Invalid signature');
+        throw new UnauthorizedException('Invalid signature');
       }
 
       this.challenges.delete(publicKey);
       this.logger.log(`Signature verified for ${publicKey}`);
 
-      return { valid: true };
+      // Get or create user
+      let user = await this.prisma.user.findUnique({
+        where: { address: publicKey },
+      });
+
+      if (!user) {
+        user = await this.prisma.user.create({
+          data: {
+            address: publicKey,
+            publicKey,
+          },
+        });
+      }
+
+      // Generate JWT
+      const payload = { sub: user.id, address: user.address };
+      const token = this.jwtService.sign(payload);
+
+      return { valid: true, token, user: { id: user.id, address: user.address } };
     } catch (error) {
       const err = error as Error;
       this.logger.error(`Signature verification failed: ${err.message}`);
-      throw new Error('Signature verification failed');
+      throw new UnauthorizedException('Signature verification failed');
     }
+  }
+
+  async getUserById(userId: string) {
+    return this.prisma.user.findUnique({ where: { id: userId } });
+  }
+
+  async getUserByAddress(address: string) {
+    return this.prisma.user.findUnique({ where: { address } });
   }
 }

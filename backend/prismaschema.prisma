@@ -14,23 +14,30 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  agreements Agreement[]
-  signatures Signature[]
+  agreements      Agreement[]
+  signatures      Signature[]
+  evidences       Evidence[]
+  transactions    Transaction[]
+  notifications   Notification[]
 }
 
 model Agreement {
-  id            String   @id @default(uuid())
-  clientAddress String
-  freelancerAddress String
-  token         String
-  totalAmount   Float
-  deposited     Float    @default(0)
-  paid          Float    @default(0)
-  refunded      Float    @default(0)
-  status        String
-  milestoneCount BigInt   @default(0)
-  currentMilestone BigInt @default(0)
-  termsHash     Bytes    @default("")
+  id                 String   @id @default(uuid())
+  clientAddress      String
+  freelancerAddress  String
+  token              String
+  totalAmount        Float
+  deposited          Float    @default(0)
+  paid               Float    @default(0)
+  refunded           Float    @default(0)
+  status             String
+  milestoneCount     BigInt   @default(0)
+  currentMilestone   BigInt   @default(0)
+  termsHash          Bytes    @default("")
+  clientAcceptedAt   DateTime?
+  freelancerAcceptedAt DateTime?
+  fundedAt           DateTime?
+  completedAt        DateTime?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -38,27 +45,145 @@ model Agreement {
   client User @relation("Client", fields: [clientAddress], references: [address])
   freelancer User @relation("Freelancer", fields: [freelancerAddress], references: [address])
 
-  milestones Milestone[]
+  milestones      Milestone[]
+  evidences       Evidence[]
+  transactions    Transaction[]
+  settlements     SettlementProposal[]
+  agentActivities AgentActivity[]
 }
 
 model Milestone {
-  id         String   @id @default(uuid())
+  id            String   @id @default(uuid())
+  agreementId   String
+  index         BigInt
+  title         String?
+  description   String?
+  amount        Float
+  status        String   @default("pending")
+  evidenceHash  String?
+  evidenceUrl   String?
+  deliveredAt   DateTime?
+  paidAt        DateTime?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  agreement Agreement @relation(fields: [agreementId], references: [id])
+  evidences Evidence[]
+}
+
+model Signature {
+  id          String @id @default(uuid())
   agreementId String
-  index       BigInt
-  amount      Float
-  status      String   @default("pending")
+  publicKey   String
+  signature   String
+  role        String
   createdAt   DateTime @default(now())
 
   agreement Agreement @relation(fields: [agreementId], references: [id])
 }
 
-model Signature {
-  id         String @id @default(uuid())
-  agreementId String
-  publicKey   String
-  signature   String
-  role        String   // "client" or "freelancer"
-  createdAt   DateTime @default(now())
+model Evidence {
+  id              String   @id @default(uuid())
+  agreementId     String
+  milestoneIndex  BigInt
+  submittedByRole String
+  hash            String
+  url             String?
+  description     String?
+  version         Int      @default(1)
+  submittedAt     DateTime @default(now())
 
   agreement Agreement @relation(fields: [agreementId], references: [id])
+  milestone Milestone @relation(fields: [agreementId, milestoneIndex], references: [agreementId, index])
+
+  @@index([agreementId])
+  @@index([agreementId, milestoneIndex])
+}
+
+model Transaction {
+  id            String   @id @default(uuid())
+  agreementId   String
+  type          String
+  status        String   @default("pending")
+  hash          String?  @unique
+  amount        Float
+  fromAddress   String
+  toAddress     String
+  network       String   @default("testnet")
+  milestoneIndex BigInt?
+  error         String?
+  submittedAt   DateTime @default(now())
+  confirmedAt   DateTime?
+
+  agreement Agreement @relation(fields: [agreementId], references: [id])
+
+  @@index([agreementId])
+  @@index([hash])
+  @@index([status])
+}
+
+model SettlementProposal {
+  id                    String   @id @default(uuid())
+  agreementId           String
+  proposedByRole        String
+  version               Int      @default(1)
+  referenceBalance      Float
+  clientAmount          Float
+  freelancerAmount      Float
+  description           String?
+  status                String   @default("proposed")
+  proposedAt            DateTime @default(now())
+  acceptedAt            DateTime?
+  executedAt            DateTime?
+
+  agreement Agreement @relation(fields: [agreementId], references: [id])
+
+  @@index([agreementId])
+  @@index([status])
+}
+
+model AgentActivity {
+  id          String   @id @default(uuid())
+  agreementId String
+  tool        String
+  input       Json
+  output      Json
+  reason      String
+  executedAt  DateTime @default(now())
+
+  agreement Agreement @relation(fields: [agreementId], references: [id])
+
+  @@index([agreementId])
+}
+
+model Notification {
+  id          String   @id @default(uuid())
+  agreementId String?
+  userId      String
+  type        String
+  title       String
+  message     String
+  read        Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  agreement Agreement? @relation(fields: [agreementId], references: [id], onDelete: SetNull)
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, read])
+  @@index([agreementId])
+}
+
+model ScheduledJob {
+  id          String   @id @default(uuid())
+  name        String
+  payload     Json
+  runAt       DateTime
+  status      String   @default("pending")
+  attempts    Int      @default(0)
+  maxAttempts Int      @default(3)
+  lastError   String?
+  createdAt   DateTime @default(now())
+  executedAt  DateTime?
+
+  @@index([status, runAt])
 }

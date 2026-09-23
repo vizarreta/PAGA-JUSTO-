@@ -1,9 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import {
-  Asset,
   Keypair,
-  Network,
+  Networks,
   Operation,
   TransactionBuilder,
 } from '@stellar/stellar-sdk';
@@ -43,8 +42,8 @@ export class StellarService {
       const account = await this.horizonServer.getAccount(publicKey);
 
       const transaction = new TransactionBuilder(account, {
-        fee: 100,
-        networkPassphrase: Network.TESTNET,
+        fee: '100',
+        networkPassphrase: Networks.TESTNET,
       })
         .addOperation(Operation.manageData({
           name: 'paga-justo-challenge',

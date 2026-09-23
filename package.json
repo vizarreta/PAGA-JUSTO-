@@ -1,0 +1,28 @@
+{
+  "name": "paga-justo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "PagaJusto - AI Escrow for Freelancers on Stellar",
+  "scripts": {
+    "dev:db": "docker-compose up -d",
+    "dev:db:down": "docker-compose down",
+    "dev:db:logs": "docker-compose logs -f postgres",
+    "dev:api": "cd backend && npm run start:dev",
+    "dev:web": "cd frontend && npm run dev",
+    "dev": "concurrently \"npm run dev:db\" \"npm run dev:api\" \"npm run dev:web\"",
+    "db:generate": "cd backend && npx prisma generate",
+    "db:push": "cd backend && npx prisma db push",
+    "db:migrate": "cd backend && npx prisma migrate dev",
+    "db:studio": "cd backend && npx prisma studio",
+    "build:api": "cd backend && npm run build",
+    "build:web": "cd frontend && npm run build",
+    "build": "npm run build:api && npm run build:web",
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

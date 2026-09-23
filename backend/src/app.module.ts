@@ -5,6 +5,7 @@ import { AuthModule } from './auth/auth.module';
 import { StellarModule } from './stellar/stellar.module';
 import { AgreementsModule } from './agreements/agreements.module';
 import { UsersModule } from './users/users.module';
+import { AgentModule } from './agent/agent.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { UsersModule } from './users/users.module';
     StellarModule,
     AgreementsModule,
     UsersModule,
+    AgentModule,
   ],
   controllers: [],
   providers: [],
