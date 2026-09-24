@@ -4,25 +4,30 @@
   "private": true,
   "description": "PagaJusto - AI Escrow for Freelancers on Stellar",
   "scripts": {
-    "dev:db": "docker-compose up -d",
-    "dev:db:down": "docker-compose down",
-    "dev:db:logs": "docker-compose logs -f postgres",
-    "dev:api": "cd backend && npm run start:dev",
-    "dev:web": "cd frontend && npm run dev",
-    "dev": "concurrently \"npm run dev:db\" \"npm run dev:api\" \"npm run dev:web\"",
-    "db:generate": "cd backend && npx prisma generate",
-    "db:push": "cd backend && npx prisma db push",
-    "db:migrate": "cd backend && npx prisma migrate dev",
-    "db:studio": "cd backend && npx prisma studio",
-    "build:api": "cd backend && npm run build",
-    "build:web": "cd frontend && npm run build",
-    "build": "npm run build:api && npm run build:web",
-    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install"
+    "dev:db": "docker compose up -d postgres",
+    "dev:db:down": "docker compose stop postgres",
+    "dev:db:logs": "docker compose logs -f postgres",
+    "dev:api": "npm --prefix apps/api run start:dev",
+    "dev:web": "npm --prefix apps/web run dev",
+    "dev": "concurrently --kill-others --success first \"npm run dev:api\" \"npm run dev:web\"",
+    "db:generate": "npm --prefix apps/api run generate",
+    "db:migrate": "npm --prefix apps/api run db:migrate",
+    "build:shared": "npm --prefix packages/shared run build",
+    "build:api": "npm --prefix apps/api run build",
+    "build:web": "npm --prefix apps/web run build",
+    "build": "npm run build:shared && npm run build:api && npm run build:web",
+    "test": "npm run build:shared && npm run build:api && npm --prefix packages/shared test && npm --prefix apps/api test && npm --prefix apps/web test",
+    "test:auth:live": "node scripts/check-auth.cjs",
+    "test:contract": "cargo test --locked -p pagajusto-escrow",
+    "build:contract": "cargo build --locked -p pagajusto-escrow --target wasm32v1-none --release",
+    "install:all": "npm ci && npm --prefix packages/shared ci && npm --prefix packages/shared run build && npm --prefix apps/api ci && npm --prefix apps/web ci",
+    "demo:testnet": "node scripts/testnet-demo.cjs",
+    "demo:reconcile": "node scripts/testnet-demo.cjs --reconcile"
   },
   "devDependencies": {
-    "concurrently": "^8.2.2"
+    "concurrently": "8.2.2"
   },
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=22.12.0"
   }
 }

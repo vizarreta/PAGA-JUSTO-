@@ -141,3 +141,12 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+# Local toolchains, contract build output and test wallets
+.tools/
+.local/
+target/
+test_snapshots/
+*.secret
+.stellar/
+.soroban/

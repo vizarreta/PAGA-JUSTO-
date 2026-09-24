@@ -1,0 +1,513 @@
+{
+  "runId": "2026-09-24T12-27-56-981Z",
+  "network": "testnet",
+  "status": "complete",
+  "client": "GAX75ZIHHNO64BPHJU2AVZHXQSDVAHJEKQ2HHWWEAJL5INOITWSXH5C6",
+  "freelancer": "GAQ5YO3SVJOVT4YBWG2EIMOYZOXMILLKS2MJXF4VN3Z73ABVVSFF2MEL",
+  "wasmSha256": "1af7b17b0c070dfa6117a4462221e387a6549763519d6b5a71fa6fbe88d09b86",
+  "transactions": [
+    {
+      "name": "upload_wasm",
+      "hash": "c726f1d70a3487c6994e1bc969947dbf59a1477a14db24768e39097d39e95184",
+      "network": "testnet",
+      "status": "confirmed",
+      "feeLimitStroops": "81009196",
+      "explorer": "https://stellar.expert/explorer/testnet/tx/c726f1d70a3487c6994e1bc969947dbf59a1477a14db24768e39097d39e95184",
+      "ledger": 4845860,
+      "feeChargedStroops": "70448698"
+    },
+    {
+      "name": "deploy_atomic_constructor",
+      "hash": "b6e0499a442cd7d83f8c429b638b52d2d127708a078751a2f6e3866e2b8b2769",
+      "network": "testnet",
+      "status": "confirmed",
+      "feeLimitStroops": "267464069",
+      "explorer": "https://stellar.expert/explorer/testnet/tx/b6e0499a442cd7d83f8c429b638b52d2d127708a078751a2f6e3866e2b8b2769",
+      "ledger": 4845861,
+      "feeChargedStroops": "232571575"
+    },
+    {
+      "name": "accept_agreement",
+      "hash": "2c7b8cc11126aa4189d62da31832fa4d8160fd126b85bb6030b2aac6c8793c94",
+      "network": "testnet",
+      "status": "confirmed",
+      "feeLimitStroops": "18969",
+      "explorer": "https://stellar.expert/explorer/testnet/tx/2c7b8cc11126aa4189d62da31832fa4d8160fd126b85bb6030b2aac6c8793c94",
+      "ledger": 4845862,
+      "feeChargedStroops": "9260"
+    },
+    {
+      "name": "accept_agreement",
+      "hash": "d98c51b5a2424f4b4766fc03683a968fb299444a1b316bcf9bb47d68d768315d",
+      "network": "testnet",
+      "status": "confirmed",
+      "feeLimitStroops": "18970",
+      "explorer": "https://stellar.expert/explorer/testnet/tx/d98c51b5a2424f4b4766fc03683a968fb299444a1b316bcf9bb47d68d768315d",
+      "ledger": 4845863,
+      "feeChargedStroops": "9261"
+    },
+    {
+      "name": "fund",
+      "hash": "ed5e7baff54a3db5f1580ec40e38e8dcbe65d8badc07b1370cba5bd5dab74227",
+      "network": "testnet",
+      "status": "confirmed",
+      "feeLimitStroops": "343063",
+      "explorer": "https://stellar.expert/explorer/testnet/tx/ed5e7baff54a3db5f1580ec40e38e8dcbe65d8badc07b1370cba5bd5dab74227",
+      "ledger": 4845864,
+      "feeChargedStroops": "292141"
+    },
+    {
+      "name": "submit_milestone",
+      "hash": "56cf990666ffbeac72157a76d57443fe16291cda285ab5f7a8316e513518a179",
+      "network": "testnet",
+      "status": "confirmed",
+      "feeLimitStroops": "275931",
+      "explorer": "https://stellar.expert/explorer/testnet/tx/56cf990666ffbeac72157a76d57443fe16291cda285ab5f7a8316e513518a179",
+      "ledger": 4845865,
+      "feeChargedStroops": "233115"
+    },
+    {
+      "name": "approve_and_release",
+      "hash": "6d29ed5bf0a3877acc8f56d755c8d0aa53d12b3112bcd456cdea994400af4189",
+      "network": "testnet",
+      "status": "confirmed",
+      "feeLimitStroops": "27822",
+      "explorer": "https://stellar.expert/explorer/testnet/tx/6d29ed5bf0a3877acc8f56d755c8d0aa53d12b3112bcd456cdea994400af4189",
+      "ledger": 4845866,
+      "feeChargedStroops": "17962"
+    },
+    {
+      "name": "open_resolution",
+      "hash": "331a0ac9abfaf0720372efc84a179bd1f6d747abb5441c437f9142fc05328ea9",
+      "network": "testnet",
+      "status": "confirmed",
+      "feeLimitStroops": "24033",
+      "explorer": "https://stellar.expert/explorer/testnet/tx/331a0ac9abfaf0720372efc84a179bd1f6d747abb5441c437f9142fc05328ea9",
+      "ledger": 4845867,
+      "feeChargedStroops": "13611"
+    },
+    {
+      "name": "propose_settlement",
+      "hash": "f3f69abf64f4719974b7e24f729e92bba293391c9acd002be753abc068076f8b",
+      "network": "testnet",
+      "status": "confirmed",
+      "feeLimitStroops": "388441",
+      "explorer": "https://stellar.expert/explorer/testnet/tx/f3f69abf64f4719974b7e24f729e92bba293391c9acd002be753abc068076f8b",
+      "ledger": 4845868,
+      "feeChargedStroops": "330584"
+    },
+    {
+      "name": "accept_settlement",
+      "hash": "4509b2a5b28319a36696b301484e54468e665de2436cd7f031f1ca4f147d4567",
+      "network": "testnet",
+      "status": "confirmed",
+      "feeLimitStroops": "45025",
+      "explorer": "https://stellar.expert/explorer/testnet/tx/4509b2a5b28319a36696b301484e54468e665de2436cd7f031f1ca4f147d4567",
+      "ledger": 4845869,
+      "feeChargedStroops": "33589"
+    }
+  ],
+  "snapshots": [
+    {
+      "label": "Depósito 100 XLM",
+      "at": "2026-09-24T12:28:26.606Z",
+      "contractState": {
+        "client": "GAX75ZIHHNO64BPHJU2AVZHXQSDVAHJEKQ2HHWWEAJL5INOITWSXH5C6",
+        "client_accepted": true,
+        "current": 0,
+        "deposited": "1000000000",
+        "freelancer": "GAQ5YO3SVJOVT4YBWG2EIMOYZOXMILLKS2MJXF4VN3Z73ABVVSFF2MEL",
+        "freelancer_accepted": true,
+        "milestones": [
+          {
+            "amount": "300000000",
+            "changes": 0,
+            "evidence_hash": null,
+            "status": [
+              "Pending"
+            ],
+            "submission": 0
+          },
+          {
+            "amount": "400000000",
+            "changes": 0,
+            "evidence_hash": null,
+            "status": [
+              "Pending"
+            ],
+            "submission": 0
+          },
+          {
+            "amount": "300000000",
+            "changes": 0,
+            "evidence_hash": null,
+            "status": [
+              "Pending"
+            ],
+            "submission": 0
+          }
+        ],
+        "paid": "0",
+        "pending": "1000000000",
+        "proposal": [],
+        "proposal_counter": 0,
+        "refunded": "0",
+        "revision_rounds": 2,
+        "status": [
+          "Active"
+        ],
+        "terms_hash": {
+          "0": 216,
+          "1": 4,
+          "2": 150,
+          "3": 114,
+          "4": 70,
+          "5": 44,
+          "6": 57,
+          "7": 35,
+          "8": 167,
+          "9": 151,
+          "10": 34,
+          "11": 72,
+          "12": 107,
+          "13": 84,
+          "14": 139,
+          "15": 110,
+          "16": 115,
+          "17": 164,
+          "18": 253,
+          "19": 206,
+          "20": 183,
+          "21": 193,
+          "22": 222,
+          "23": 212,
+          "24": 11,
+          "25": 189,
+          "26": 15,
+          "27": 127,
+          "28": 72,
+          "29": 88,
+          "30": 231,
+          "31": 210
+        },
+        "token": "CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC",
+        "total": "1000000000",
+        "version": 1
+      },
+      "nativeSacBalanceStroops": "1000000000"
+    },
+    {
+      "label": "Pago 30 XLM; saldo 70 XLM",
+      "at": "2026-09-24T12:28:38.226Z",
+      "contractState": {
+        "client": "GAX75ZIHHNO64BPHJU2AVZHXQSDVAHJEKQ2HHWWEAJL5INOITWSXH5C6",
+        "client_accepted": true,
+        "current": 1,
+        "deposited": "1000000000",
+        "freelancer": "GAQ5YO3SVJOVT4YBWG2EIMOYZOXMILLKS2MJXF4VN3Z73ABVVSFF2MEL",
+        "freelancer_accepted": true,
+        "milestones": [
+          {
+            "amount": "300000000",
+            "changes": 0,
+            "evidence_hash": {
+              "0": 191,
+              "1": 153,
+              "2": 4,
+              "3": 79,
+              "4": 142,
+              "5": 116,
+              "6": 105,
+              "7": 4,
+              "8": 181,
+              "9": 173,
+              "10": 49,
+              "11": 97,
+              "12": 24,
+              "13": 211,
+              "14": 107,
+              "15": 76,
+              "16": 93,
+              "17": 184,
+              "18": 107,
+              "19": 52,
+              "20": 118,
+              "21": 10,
+              "22": 29,
+              "23": 53,
+              "24": 124,
+              "25": 217,
+              "26": 84,
+              "27": 250,
+              "28": 188,
+              "29": 86,
+              "30": 249,
+              "31": 151
+            },
+            "status": [
+              "Paid"
+            ],
+            "submission": 1
+          },
+          {
+            "amount": "400000000",
+            "changes": 0,
+            "evidence_hash": null,
+            "status": [
+              "Pending"
+            ],
+            "submission": 0
+          },
+          {
+            "amount": "300000000",
+            "changes": 0,
+            "evidence_hash": null,
+            "status": [
+              "Pending"
+            ],
+            "submission": 0
+          }
+        ],
+        "paid": "300000000",
+        "pending": "700000000",
+        "proposal": [],
+        "proposal_counter": 0,
+        "refunded": "0",
+        "revision_rounds": 2,
+        "status": [
+          "Active"
+        ],
+        "terms_hash": {
+          "0": 216,
+          "1": 4,
+          "2": 150,
+          "3": 114,
+          "4": 70,
+          "5": 44,
+          "6": 57,
+          "7": 35,
+          "8": 167,
+          "9": 151,
+          "10": 34,
+          "11": 72,
+          "12": 107,
+          "13": 84,
+          "14": 139,
+          "15": 110,
+          "16": 115,
+          "17": 164,
+          "18": 253,
+          "19": 206,
+          "20": 183,
+          "21": 193,
+          "22": 222,
+          "23": 212,
+          "24": 11,
+          "25": 189,
+          "26": 15,
+          "27": 127,
+          "28": 72,
+          "29": 88,
+          "30": 231,
+          "31": 210
+        },
+        "token": "CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC",
+        "total": "1000000000",
+        "version": 1
+      },
+      "nativeSacBalanceStroops": "700000000"
+    },
+    {
+      "label": "Cierre: 50 XLM adicionales al freelancer y 20 XLM devueltos",
+      "at": "2026-09-24T12:28:52.995Z",
+      "contractState": {
+        "client": "GAX75ZIHHNO64BPHJU2AVZHXQSDVAHJEKQ2HHWWEAJL5INOITWSXH5C6",
+        "client_accepted": true,
+        "current": 1,
+        "deposited": "1000000000",
+        "freelancer": "GAQ5YO3SVJOVT4YBWG2EIMOYZOXMILLKS2MJXF4VN3Z73ABVVSFF2MEL",
+        "freelancer_accepted": true,
+        "milestones": [
+          {
+            "amount": "300000000",
+            "changes": 0,
+            "evidence_hash": {
+              "0": 191,
+              "1": 153,
+              "2": 4,
+              "3": 79,
+              "4": 142,
+              "5": 116,
+              "6": 105,
+              "7": 4,
+              "8": 181,
+              "9": 173,
+              "10": 49,
+              "11": 97,
+              "12": 24,
+              "13": 211,
+              "14": 107,
+              "15": 76,
+              "16": 93,
+              "17": 184,
+              "18": 107,
+              "19": 52,
+              "20": 118,
+              "21": 10,
+              "22": 29,
+              "23": 53,
+              "24": 124,
+              "25": 217,
+              "26": 84,
+              "27": 250,
+              "28": 188,
+              "29": 86,
+              "30": 249,
+              "31": 151
+            },
+            "status": [
+              "Paid"
+            ],
+            "submission": 1
+          },
+          {
+            "amount": "400000000",
+            "changes": 0,
+            "evidence_hash": null,
+            "status": [
+              "Pending"
+            ],
+            "submission": 0
+          },
+          {
+            "amount": "300000000",
+            "changes": 0,
+            "evidence_hash": null,
+            "status": [
+              "Pending"
+            ],
+            "submission": 0
+          }
+        ],
+        "paid": "800000000",
+        "pending": "0",
+        "proposal": [
+          {
+            "client_amount": "200000000",
+            "freelancer_amount": "500000000",
+            "id": 1,
+            "proposer": "GAX75ZIHHNO64BPHJU2AVZHXQSDVAHJEKQ2HHWWEAJL5INOITWSXH5C6",
+            "reference_balance": "700000000",
+            "terms_version": 1
+          }
+        ],
+        "proposal_counter": 1,
+        "refunded": "200000000",
+        "revision_rounds": 2,
+        "status": [
+          "ClosedBySettlement"
+        ],
+        "terms_hash": {
+          "0": 216,
+          "1": 4,
+          "2": 150,
+          "3": 114,
+          "4": 70,
+          "5": 44,
+          "6": 57,
+          "7": 35,
+          "8": 167,
+          "9": 151,
+          "10": 34,
+          "11": 72,
+          "12": 107,
+          "13": 84,
+          "14": 139,
+          "15": 110,
+          "16": 115,
+          "17": 164,
+          "18": 253,
+          "19": 206,
+          "20": 183,
+          "21": 193,
+          "22": 222,
+          "23": 212,
+          "24": 11,
+          "25": 189,
+          "26": 15,
+          "27": 127,
+          "28": 72,
+          "29": 88,
+          "30": 231,
+          "31": 210
+        },
+        "token": "CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC",
+        "total": "1000000000",
+        "version": 1
+      },
+      "nativeSacBalanceStroops": "0"
+    }
+  ],
+  "terms": {
+    "version": 1,
+    "title": "Demo técnica PagaJusto",
+    "description": "Página web de ejemplo para verificar escrow con XLM de prueba.",
+    "network": "testnet",
+    "asset": {
+      "code": "XLM",
+      "contractId": "CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC"
+    },
+    "clientAddress": "GAX75ZIHHNO64BPHJU2AVZHXQSDVAHJEKQ2HHWWEAJL5INOITWSXH5C6",
+    "freelancerAddress": "GAQ5YO3SVJOVT4YBWG2EIMOYZOXMILLKS2MJXF4VN3Z73ABVVSFF2MEL",
+    "totalBudgetStroops": "1000000000",
+    "milestones": [
+      {
+        "index": 0,
+        "title": "Diseño",
+        "description": "Entrega demostrativa",
+        "acceptanceCriteria": [
+          "Revisión manual del cliente"
+        ],
+        "amountStroops": "300000000",
+        "dueDate": "2026-09-25T12:28:02.465Z"
+      },
+      {
+        "index": 1,
+        "title": "Desarrollo",
+        "description": "Entrega demostrativa",
+        "acceptanceCriteria": [
+          "Revisión manual del cliente"
+        ],
+        "amountStroops": "400000000",
+        "dueDate": "2026-09-26T12:28:02.465Z"
+      },
+      {
+        "index": 2,
+        "title": "Publicación",
+        "description": "Entrega demostrativa",
+        "acceptanceCriteria": [
+          "Revisión manual del cliente"
+        ],
+        "amountStroops": "300000000",
+        "dueDate": "2026-09-27T12:28:02.465Z"
+      }
+    ],
+    "reviewPeriodHours": 48,
+    "revisionRounds": 2,
+    "clientMaterials": [
+      "Logo de ejemplo"
+    ],
+    "scopeIncluded": [
+      "Página web"
+    ],
+    "scopeExcluded": [
+      "Hosting comercial"
+    ],
+    "resolutionPolicy": "Los pagos realizados no se revierten. El saldo pendiente solo se distribuye con aceptación de ambas partes. Sin acuerdo bilateral los fondos permanecen bloqueados; no hay mediación ni devolución automática por vencimiento en este MVP.",
+    "createdAt": "2026-09-24T12:28:02.465Z"
+  },
+  "canonicalTerms": "{\"asset\":{\"code\":\"XLM\",\"contractId\":\"CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC\"},\"clientAddress\":\"GAX75ZIHHNO64BPHJU2AVZHXQSDVAHJEKQ2HHWWEAJL5INOITWSXH5C6\",\"clientMaterials\":[\"Logo de ejemplo\"],\"createdAt\":\"2026-09-24T12:28:02.465Z\",\"description\":\"Página web de ejemplo para verificar escrow con XLM de prueba.\",\"freelancerAddress\":\"GAQ5YO3SVJOVT4YBWG2EIMOYZOXMILLKS2MJXF4VN3Z73ABVVSFF2MEL\",\"milestones\":[{\"acceptanceCriteria\":[\"Revisión manual del cliente\"],\"amountStroops\":\"300000000\",\"description\":\"Entrega demostrativa\",\"dueDate\":\"2026-09-25T12:28:02.465Z\",\"index\":0,\"title\":\"Diseño\"},{\"acceptanceCriteria\":[\"Revisión manual del cliente\"],\"amountStroops\":\"400000000\",\"description\":\"Entrega demostrativa\",\"dueDate\":\"2026-09-26T12:28:02.465Z\",\"index\":1,\"title\":\"Desarrollo\"},{\"acceptanceCriteria\":[\"Revisión manual del cliente\"],\"amountStroops\":\"300000000\",\"description\":\"Entrega demostrativa\",\"dueDate\":\"2026-09-27T12:28:02.465Z\",\"index\":2,\"title\":\"Publicación\"}],\"network\":\"testnet\",\"resolutionPolicy\":\"Los pagos realizados no se revierten. El saldo pendiente solo se distribuye con aceptación de ambas partes. Sin acuerdo bilateral los fondos permanecen bloqueados; no hay mediación ni devolución automática por vencimiento en este MVP.\",\"reviewPeriodHours\":48,\"revisionRounds\":2,\"scopeExcluded\":[\"Hosting comercial\"],\"scopeIncluded\":[\"Página web\"],\"title\":\"Demo técnica PagaJusto\",\"totalBudgetStroops\":\"1000000000\",\"version\":1}",
+  "termsHash": "d8049672462c3923a79722486b548b6e73a4fdceb7c1ded40bbd0f7f4858e7d2",
+  "contractId": "CCYTNDYEETWXBB5NO6CVQEC75FPESVZUS667OR4GHLCQURFXVUV7E665",
+  "contractExplorer": "https://stellar.expert/explorer/testnet/contract/CCYTNDYEETWXBB5NO6CVQEC75FPESVZUS667OR4GHLCQURFXVUV7E665"
+}

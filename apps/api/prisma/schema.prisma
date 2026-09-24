@@ -1,0 +1,267 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model AuthChallenge {
+  nonce     String   @id
+  address   String
+  message   String
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime @default(now())
+
+  @@index([expiresAt])
+}
+
+// ─────────────────────────────────────────────
+// USERS
+// ─────────────────────────────────────────────
+
+model User {
+  id        String   @id @default(uuid())
+  address   String   @unique   // Stellar public key = address
+  publicKey String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  agreementsAsClient     Agreement[]   @relation("ClientAgreements")
+  agreementsAsFreelancer Agreement[]   @relation("FreelancerAgreements")
+  signatures             Signature[]
+  notifications          Notification[]
+}
+
+// ─────────────────────────────────────────────
+// AGREEMENTS
+// ─────────────────────────────────────────────
+
+model Agreement {
+  id                   String    @id @default(uuid())
+  clientAddress        String
+  freelancerAddress    String
+  token                String    @default("XLM")
+  totalAmount          BigInt     // integer stroops
+  deposited            BigInt   @default(0)
+  paid                 BigInt   @default(0)
+  refunded             BigInt   @default(0)
+  status               String    @default("Created")
+  // Statuses: Created | Funded | Active | Completed | InResolution | ClosedBySettlement
+  milestoneCount       Int       @default(0)
+  currentMilestone     Int       @default(0)
+  termsHash            String    @default("")        // hex SHA-256 of canonical JSON terms
+  contractId           String?                       // Soroban contract ID once deployed
+  clientAcceptedAt     DateTime?
+  freelancerAcceptedAt DateTime?
+  fundedAt             DateTime?
+  completedAt          DateTime?
+  // Full terms JSON stored for audit
+  termsJson            Json?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  client     User @relation("ClientAgreements",     fields: [clientAddress],     references: [address])
+  freelancer User @relation("FreelancerAgreements", fields: [freelancerAddress], references: [address])
+
+  milestones      Milestone[]
+  evidences       Evidence[]
+  transactions    Transaction[]
+  settlements     SettlementProposal[]
+  agentActivities AgentActivity[]
+  notifications   Notification[]
+  signatures      Signature[]
+
+  @@index([clientAddress])
+  @@index([freelancerAddress])
+  @@index([status])
+}
+
+// ─────────────────────────────────────────────
+// MILESTONES
+// ─────────────────────────────────────────────
+
+model Milestone {
+  id                  String    @id @default(uuid())
+  agreementId         String
+  index               Int
+  title               String?
+  description         String?
+  acceptanceCriteria  String[]  // array of criteria strings
+  amount              BigInt
+  status              String    @default("pending")
+  // Statuses: pending | delivered | paid | changes_requested
+  evidenceHash        String?
+  evidenceUrl         String?
+  dueDate             DateTime?
+  deliveredAt         DateTime?
+  paidAt              DateTime?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  agreement Agreement @relation(fields: [agreementId], references: [id], onDelete: Cascade)
+  evidences Evidence[]
+
+  @@unique([agreementId, index])
+  @@index([agreementId])
+}
+
+// ─────────────────────────────────────────────
+// SIGNATURES (bilateral acceptance of terms)
+// ─────────────────────────────────────────────
+
+model Signature {
+  id          String   @id @default(uuid())
+  agreementId String
+  userId      String
+  publicKey   String
+  signature   String    // base64 Ed25519 signature of termsHash
+  role        String    // "client" | "freelancer"
+  termsHash   String    // hash that was signed
+  createdAt   DateTime @default(now())
+
+  agreement Agreement @relation(fields: [agreementId], references: [id], onDelete: Cascade)
+  user      User      @relation(fields: [userId],      references: [id], onDelete: Cascade)
+
+  @@unique([agreementId, role])  // one signature per role per agreement
+  @@index([agreementId])
+}
+
+// ─────────────────────────────────────────────
+// EVIDENCE
+// ─────────────────────────────────────────────
+
+model Evidence {
+  id              String   @id @default(uuid())
+  agreementId     String
+  milestoneIndex  Int
+  submittedByRole String    // "freelancer"
+  hash            String    // SHA-256 of evidence content (if file) or URL
+  url             String?
+  description     String?
+  version         Int      @default(1)
+  submittedAt     DateTime @default(now())
+
+  agreement Agreement @relation(fields: [agreementId], references: [id], onDelete: Cascade)
+  milestone Milestone @relation(fields: [agreementId, milestoneIndex], references: [agreementId, index])
+
+  @@index([agreementId])
+  @@index([agreementId, milestoneIndex])
+}
+
+// ─────────────────────────────────────────────
+// TRANSACTIONS
+// ─────────────────────────────────────────────
+
+model Transaction {
+  id             String    @id @default(uuid())
+  agreementId    String
+  type           String    // "deposit" | "milestone_payment" | "refund" | "settlement"
+  status         String    @default("pending")
+  // Statuses: pending_signature | submitted | pending_confirmation | confirmed | failed | unknown
+  hash           String?   @unique    // Stellar tx hash
+  amount         BigInt
+  fromAddress    String
+  toAddress      String
+  network        String    @default("testnet")
+  milestoneIndex Int?
+  error          String?
+  xdr            String?   // signed XDR for replay/verification
+  submittedAt    DateTime  @default(now())
+  confirmedAt    DateTime?
+
+  agreement Agreement @relation(fields: [agreementId], references: [id], onDelete: Cascade)
+
+  @@index([agreementId])
+  @@index([hash])
+  @@index([status])
+}
+
+// ─────────────────────────────────────────────
+// SETTLEMENT PROPOSALS
+// ─────────────────────────────────────────────
+
+model SettlementProposal {
+  id                String    @id @default(uuid())
+  agreementId       String
+  proposedByRole    String    // "client" | "freelancer"
+  version           Int       @default(1)
+  referenceBalance  BigInt
+  clientAmount      BigInt
+  freelancerAmount  BigInt
+  description       String?
+  status            String    @default("proposed")
+  // Statuses: proposed | accepted | executed | invalidated
+  proposedAt        DateTime  @default(now())
+  acceptedAt        DateTime?
+  executedAt        DateTime?
+
+  agreement Agreement @relation(fields: [agreementId], references: [id], onDelete: Cascade)
+
+  @@index([agreementId])
+  @@index([status])
+}
+
+// ─────────────────────────────────────────────
+// AGENT ACTIVITY LOG
+// ─────────────────────────────────────────────
+
+model AgentActivity {
+  id          String   @id @default(uuid())
+  agreementId String
+  tool        String   // "draft_agreement" | "summarize_evidence" | "notify_parties" | etc.
+  input       Json
+  output      Json
+  reason      String
+  executedAt  DateTime @default(now())
+
+  agreement Agreement @relation(fields: [agreementId], references: [id], onDelete: Cascade)
+
+  @@index([agreementId])
+  @@index([executedAt])
+}
+
+// ─────────────────────────────────────────────
+// NOTIFICATIONS (in-app)
+// ─────────────────────────────────────────────
+
+model Notification {
+  id          String    @id @default(uuid())
+  agreementId String?
+  userId      String
+  type        String    // "deposit" | "milestone_delivered" | "payment" | "changes" | "resolution" | "reminder"
+  title       String
+  message     String
+  read        Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+
+  agreement Agreement? @relation(fields: [agreementId], references: [id], onDelete: SetNull)
+  user      User       @relation(fields: [userId],      references: [id], onDelete: Cascade)
+
+  @@index([userId, read])
+  @@index([agreementId])
+}
+
+// ─────────────────────────────────────────────
+// SCHEDULED JOBS
+// ─────────────────────────────────────────────
+
+model ScheduledJob {
+  id          String    @id @default(uuid())
+  name        String
+  payload     Json
+  runAt       DateTime
+  status      String    @default("pending")
+  // Statuses: pending | running | done | failed
+  attempts    Int       @default(0)
+  maxAttempts Int       @default(3)
+  lastError   String?
+  createdAt   DateTime  @default(now())
+  executedAt  DateTime?
+
+  @@index([status, runAt])
+}
